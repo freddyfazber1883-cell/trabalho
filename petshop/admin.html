@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin — ROWF</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+<!-- ===== TELA DE LOGIN ===== -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">🔐</div>
+    <h1>Área Administrativa</h1>
+    <p>ROWF — Painel de controle</p>
+
+    <form onsubmit="fazerLogin(event)" novalidate>
+      <label class="login-label" for="adminSenha">Senha de acess</label>
+      <input
+        type="password"
+        id="adminSenha"
+        class="login-input"
+        placeholder="Digite sua senha"
+        autocomplete="current-password"
+        required
+      >
+      <div id="erroLogin" class="hidden">❌ Senha incorreta. Tente novamente.</div>
+      <button type="submit" class="login-btn">Entrar no painel</button>
+    </form>
+
+    <p class="info-note">
+      <code class="info-code"></code>
+    </p>
+    <p class="info-note info-small">
+      <a href="index.html" class="link-loja">← Voltar à loja</a>
+    </p>
+  </div>
+</div>
+
+<!-- ===== PAINEL ADMIN ===== -->
+<div id="adminPanel">
+
+  <!-- Sidebar -->
+  <aside class="adm-sidebar" role="navigation" aria-label="Menu do painel">
+    <div class="adm-logo">
+      <span class="icon">🐾</span>
+      <div>
+        <strong>ROWF</strong>
+        <small>Painel Admin</small>
+      </div>
+    </div>
+
+    <nav class="adm-nav">
+      <button type="button" class="adm-nav-btn ativo" data-sec="dashboard" onclick="navAdmin('dashboard')">
+        <span class="n-icon">📊</span> Dashboard
+      </button>
+      <button type="button" class="adm-nav-btn" data-sec="pedidos" onclick="navAdmin('pedidos')">
+        <span class="n-icon">📦</span> Pedidos
+      </button>
+      <button type="button" class="adm-nav-btn" data-sec="mensagens" onclick="navAdmin('mensagens')">
+        <span class="n-icon">💬</span> Mensagens
+      </button>
+      <button type="button" class="adm-nav-btn" data-sec="agendamentos" onclick="navAdmin('agendamentos')">
+        <span class="n-icon">📅</span> Agendamentos
+      </button>
+      <button type="button" class="adm-nav-btn" data-sec="produtos" onclick="navAdmin('produtos')">
+        <span class="n-icon">🛍️</span> Produtos
+      </button>
+    </nav>
+
+    <div class="adm-logout">
+      <button type="button" onclick="fazerLogout()">
+        <span>🚪</span> Sair do painel
+      </button>
+    </div>
+  </aside>
+
+  <!-- Conteúdo -->
+  <div class="adm-content">
+
+    <!-- Top bar -->
+    <header class="adm-topbar" role="banner">
+      <h2 id="adm-topbar-titulo">Dashboard</h2>
+      <div class="adm-topbar-right">
+        <span class="adm-user">👤 Administrador</span>
+        <a class="btn-loja" href="index.html" target="_blank">🛒 Ver loja</a>
+      </div>
+    </header>
+
+    <!-- Body scrollável -->
+    <div class="adm-body">
+
+      <!-- =============================
+           SEÇÃO: DASHBOARD
+      ============================== -->
+      <div class="adm-page" id="adm-dashboard">
+
+        <!-- Stat cards -->
+        <div class="stats-grid">
+          <div class="stat-card s-receita">
+            <span class="stat-icon">💰</span>
+            <div class="stat-label">Receita Total</div>
+            <div class="stat-val" id="stat-receita">R$ 0,00</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">📦</span>
+            <div class="stat-label">Pedidos</div>
+            <div class="stat-val" id="stat-pedidos">0</div>
+          </div>
+          <div class="stat-card s-msgs">
+            <span class="stat-icon">💬</span>
+            <div class="stat-label">Msgs não lidas</div>
+            <div class="stat-val" id="stat-msgs">0</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">🛍️</span>
+            <div class="stat-label">Produtos</div>
+            <div class="stat-val" id="stat-produtos">0</div>
+          </div>
+        </div>
+
+        <!-- Gráfico + últimos pedidos -->
+        <div class="dash-grid">
+          <div class="box">
+            <div class="box-hdr"><h3>Status dos pedidos</h3></div>
+            <div class="box-body" id="graficoStatus">
+              <p class="tc">Nenhum pedido ainda.</p>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="box-hdr">
+              <h3>Últimos pedidos</h3>
+              <button type="button" class="btn-sm btn-det" onclick="navAdmin('pedidos')">Ver todos</button>
+            </div>
+            <div class="box-body-np">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Cliente</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody id="ultPedidos">
+                  <tr><td colspan="5" class="tc">Nenhum pedido ainda.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dica rápida -->
+        <div class="box box-tip">
+          <div class="box-body">
+            <p class="tip-text">
+              💡 <strong>Dica:</strong> Use as seções no menu lateral para gerenciar pedidos, responder mensagens, controlar agendamentos e atualizar seu catálogo de produtos. Todos os dados ficam salvos automaticamente no navegador.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- =============================
+           SEÇÃO: PEDIDOS
+      ============================== -->
+      <div class="adm-page" id="adm-pedidos">
+        <div class="box-hdr">
+          <h3>Filtrar por status</h3>
+          <div class="filtros-adm">
+            <button type="button" class="f-btn ativo" onclick="filtrarPedidos('Todos', this)">Todos</button>
+            <button type="button" class="f-btn" onclick="filtrarPedidos('Pendente', this)">Pendente</button>
+            <button type="button" class="f-btn" onclick="filtrarPedidos('Enviado', this)">Enviado</button>
+            <button type="button" class="f-btn" onclick="filtrarPedidos('Entregue', this)">Entregue</button>
+            <button type="button" class="f-btn" onclick="filtrarPedidos('Cancelado', this)">Cancelado</button>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box-body-np">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Cliente</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th>Total</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaPedidos">
+                <tr><td colspan="6" class="tc">Nenhum pedido ainda.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- =============================
+           SEÇÃO: MENSAGENS
+      ============================== -->
+      <div class="adm-page" id="adm-mensagens">
+        <div class="box-hdr">
+          <h3>Mensagens de contato</h3>
+          <button type="button" class="btn-sm btn-verde" onclick="carregarMensagens()">↻ Atualizar</button>
+        </div>
+        <div id="listaMensagens">
+          <p class="sem-dados">Nenhuma mensagem recebida ainda.</p>
+        </div>
+      </div>
+
+      <!-- =============================
+           SEÇÃO: AGENDAMENTOS
+      ============================== -->
+      <div class="adm-page" id="adm-agendamentos">
+        <div class="box-hdr">
+          <h3>Todos os agendamentos</h3>
+          <button type="button" class="btn-sm btn-verde" onclick="carregarAgendamentos()">↻ Atualizar</button>
+        </div>
+        <div class="box">
+          <div class="box-body-np">
+            <table>
+              <thead>
+                <tr>
+                  <th>Serviço</th>
+                  <th>Pet</th>
+                  <th>Tutor</th>
+                  <th>Data / Horário</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaAgend">
+                <tr><td colspan="6" class="tc">Nenhum agendamento ainda.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- =============================
+           SEÇÃO: PRODUTOS
+      ============================== -->
+      <div class="adm-page" id="adm-produtos">
+        <div class="box-hdr">
+          <h3>Catálogo de produtos</h3>
+          <button type="button" class="btn-pri-sm" onclick="abrirFormProduto()">+ Novo Produto</button>
+        </div>
+
+        <!-- Formulário de produto (oculto por padrão) -->
+        <div class="form-prod-box hidden" id="formProdBox">
+          <h3 id="formProdTitle">Novo Produto</h3>
+          <form id="formProd" onsubmit="salvarProduto(event)">
+            <div class="fp-row">
+              <div class="fp-group">
+                <label for="fpNome">Nome *</label>
+                <input type="text" id="fpNome" name="nome" required placeholder="Ex: Ração Premium Cão">
+              </div>
+              <div class="fp-group">
+                <label for="fpCat">Categoria *</label>
+                <select id="fpCat" name="categoria" required>
+                  <option value="">Selecione…</option>
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Higiene">Higiene</option>
+                  <option value="Brinquedos">Brinquedos</option>
+                  <option value="Acessórios">Acessórios</option>
+                  <option value="Saúde">Saúde</option>
+                </select>
+              </div>
+            </div>
+            <div class="fp-row">
+              <div class="fp-group">
+                <label for="fpPreco">Preço (R$) *</label>
+                <input type="number" id="fpPreco" name="preco" step="0.01" min="0" required placeholder="0,00">
+              </div>
+              <div class="fp-group">
+                <label for="fpPrecoAnt">Preço Antigo (opcional)</label>
+                <input type="number" id="fpPrecoAnt" name="precoAntigo" step="0.01" min="0" placeholder="0,00">
+              </div>
+            </div>
+            <div class="fp-row">
+              <div class="fp-group">
+                <label for="fpEstoque">Estoque *</label>
+                <input type="number" id="fpEstoque" name="estoque" min="0" required placeholder="0">
+              </div>
+              <div class="fp-group">
+                <label for="fpEmoji">Emoji</label>
+                <input type="text" id="fpEmoji" name="emoji" placeholder="🐾" maxlength="4">
+              </div>
+            </div>
+            <div class="fp-row">
+              <div class="fp-group">
+                <label for="fpBadge">Badge</label>
+                <select id="fpBadge" name="badge">
+                  <option value="">Sem badge</option>
+                  <option value="novo">Novo</option>
+                  <option value="promo">Promoção</option>
+                </select>
+              </div>
+              <div></div>
+            </div>
+            <div class="fp-group">
+              <label for="fpDesc">Descrição</label>
+              <textarea id="fpDesc" name="descricao" rows="3" placeholder="Descrição do produto…"></textarea>
+            </div>
+            <div class="fp-acoes">
+              <button type="submit" class="btn-salvar">💾 Salvar Produto</button>
+              <button type="button" class="btn-cancel" onclick="fecharFormProduto()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="box">
+          <div class="box-body-np">
+            <table>
+              <thead>
+                <tr>
+                  <th>Emoji</th>
+                  <th>Produto</th>
+                  <th>Preço</th>
+                  <th>Estoque</th>
+                  <th>Badge</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaProdutos">
+                <tr><td colspan="6" class="tc">Carregando…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /adm-body -->
+  </div><!-- /adm-content -->
+</div><!-- /adminPanel -->
+
+<!-- ===== MODAL DETALHE ===== -->
+<div id="modal" role="dialog" aria-modal="true" aria-label="Detalhes" onclick="if(event.target===this)fecharModal()">
+  <div class="modal-box">
+    <button type="button" class="modal-close" onclick="fecharModal()" aria-label="Fechar">✕</button>
+    <div id="modalConteudo"></div>
+  </div>
+</div>
+
+<!-- ===== TOAST ADMIN ===== -->
+<div id="toastAdmin" role="status" aria-live="polite"></div>
+
+<!-- SCRIPTS -->
+<script src="../js/banco.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

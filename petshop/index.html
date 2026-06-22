@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROWF — Tudo para o seu pet</title>
+  <meta name="description" content="ROWF — o melhor pet shop da cidade. Produtos, serviços veterinários, banho e tosa, hotel pet e muito mais.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- OVERLAY (fecha sidebar no mobile) -->
+<div id="overlay" onclick="fecharMenu()"></div>
+
+<!-- TOAST -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ========== SIDEBAR ========== -->
+<aside class="sidebar" id="sidebar" role="navigation" aria-label="Menu principal">
+  <div class="sb-logo">
+    <span class="sb-logo-icon">🧡</span>
+    <div>
+      <strong>ROWF</strong>
+      <small>Pet Shop & Clínica</small>
+    </div>
+    <button type="button" class="sb-close" onclick="fecharMenu()" aria-label="Fechar menu">✕</button>
+  </div>
+
+  <nav class="sb-nav">
+    <button type="button" class="nav-link ativo" data-page="home"    onclick="navegarPara('home')">
+      <span class="icon">🏠</span> Início
+    </button>
+    <button type="button" class="nav-link" data-page="produtos" onclick="navegarPara('produtos')">
+      <span class="icon">🛍️</span> Produtos
+    </button>
+    <button type="button" class="nav-link" data-page="servicos" onclick="navegarPara('servicos')">
+      <span class="icon">✂️</span> Serviços
+    </button>
+    <button type="button" class="nav-link" data-page="carrinho" onclick="navegarPara('carrinho')">
+      <span class="icon">🛒</span> Carrinho
+      <span class="cart-count" style="display:none">0</span>
+    </button>
+    <button type="button" class="nav-link" data-page="contato" onclick="navegarPara('contato')">
+      <span class="icon">📬</span> Contato
+    </button>
+    <button type="button" class="nav-link" data-page="blog" onclick="navegarPara('blog')">
+      <span class="icon">📰</span> Blog & Dicas
+    </button>
+  </nav>
+
+  <div class="sb-promo">
+    <div class="promo-tt">🎉 Promoção da semana</div>
+    <p>Frete grátis em compras acima de R$&nbsp;150!</p>
+    <button type="button" onclick="navegarPara('produtos')">Ver produtos →</button>
+  </div>
+</aside>
+
+<!-- ========== WRAPPER ========== -->
+<div class="wrapper">
+
+  <!-- ===== HEADER ===== -->
+  <header class="header" role="banner">
+    <div class="header-inner">
+      <div class="hdr-left">
+        <button type="button" class="hamburger" onclick="toggleMenu()" aria-label="Abrir menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <button type="button" class="logo-btn" onclick="navegarPara('home')">
+          <span class="logo-icon">🐾</span>
+    <span>ROWF</span>
+      </div>
+
+      <nav class="hdr-nav" aria-label="Navegação rápida">
+        <button type="button" class="hnav-btn" onclick="navegarPara('produtos')">Produtos</button>
+        <button type="button" class="hnav-btn" onclick="navegarPara('servicos')">Serviços</button>
+        <button type="button" class="hnav-btn" onclick="navegarPara('contato')">Contato</button>
+      </nav>
+
+      <div class="hdr-right">
+        <button type="button" class="icon-btn" onclick="navegarPara('carrinho')" aria-label="Carrinho de compras">
+          🛒
+          <span class="cart-badge cart-count" style="display:none">0</span>
+        </button>
+        <a class="btn-ligar" href="tel:+5511999999999">
+          📞 (11) 9 9999-9999
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main" id="main" role="main">
+
+    <!-- ============================
+         PÁGINA: HOME
+    ============================= -->
+    <section class="page ativa" id="page-home" aria-label="Página inicial">
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-txt">
+          <div class="hero-tag">🐾 O melhor para o seu pet!</div>
+          <h1>Cuidado e <span class="dest">amor</span> para seu animal de estimação</h1>
+          <p>Produtos de qualidade, serviços profissionais e muito carinho. Tudo o que seu pet precisa em um só lugar.</p>
+          <div class="hero-btns">
+            <button type="button" class="btn-pri" onclick="navegarPara('produtos')">🛍️ Ver Produtos</button>
+            <button type="button" class="btn-sec" onclick="navegarPara('servicos')">📅 Agendar Serviço</button>
+          </div>
+        </div>
+        <figure class="hero-img" aria-label="Mascote do pet shop">
+          🐕
+          <figcaption class="sr-only">Cão feliz representando a marca ROWF</figcaption>
+        </figure>
+      </div>
+
+      <!-- Destaques -->
+      <div class="destaques">
+        <div class="dest-card">
+          <span class="icon">🚚</span>
+          <div><strong>Frete Grátis</strong><small>Compras acima de R$&nbsp;150</small></div>
+        </div>
+        <div class="dest-card">
+          <span class="icon">⭐</span>
+          <div><strong>Produtos Premium</strong><small>Marcas selecionadas</small></div>
+        </div>
+        <div class="dest-card">
+          <span class="icon">🩺</span>
+          <div><strong>Equipe Veterinária</strong><small>Profissionais especializados</small></div>
+        </div>
+      </div>
+
+      <!-- Categorias rápidas -->
+      <h2>Navegue por categoria</h2>
+      <div class="filtros" style="margin-bottom:2rem">
+        <button type="button" class="filtro-btn ativo" onclick="navegarPara('produtos')">🐾 Todos os produtos</button>
+        <button type="button" class="filtro-btn" onclick="navegarPara('produtos')">🥣 Alimentação</button>
+        <button type="button" class="filtro-btn" onclick="navegarPara('produtos')">🧴 Higiene</button>
+        <button type="button" class="filtro-btn" onclick="navegarPara('produtos')">🎾 Brinquedos</button>
+        <button type="button" class="filtro-btn" onclick="navegarPara('produtos')">🏷️ Acessórios</button>
+        <button type="button" class="filtro-btn" onclick="navegarPara('produtos')">💊 Saúde</button>
+      </div>
+
+      <!-- Blog preview -->
+      <section class="blog-section" aria-label="Últimas dicas do blog">
+        <div class="box-hdr" style="padding:0 0 1rem">
+          <h2 style="margin:0">📰 Dicas & Novidades</h2>
+          <button type="button" class="btn-sec" style="font-size:.8rem;padding:.4rem .9rem" onclick="navegarPara('blog')">Ver todas</button>
+        </div>
+        <div class="blog-grid">
+          <article class="blog-card" onclick="navegarPara('blog')">
+            <span class="blog-icon">🥣</span>
+            <div>
+              <time datetime="2025-05-10" class="blog-date">10 de maio de 2025</time>
+              <h3>Como escolher a ração certa para o seu cão?</h3>
+              <p>Entenda os diferentes tipos de ração e como identificar a melhor opção para a raça e idade do seu pet.</p>
+            </div>
+          </article>
+          <article class="blog-card" onclick="navegarPara('blog')">
+            <span class="blog-icon">🛁</span>
+            <div>
+              <time datetime="2025-05-03" class="blog-date">3 de maio de 2025</time>
+              <h3>Frequência ideal de banho para cães e gatos</h3>
+              <p>Saiba por que banhos em excesso podem prejudicar a saúde da pelagem e da pele do seu animal.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============================
+         PÁGINA: PRODUTOS
+    ============================= -->
+    <section class="page" id="page-produtos" aria-label="Loja de produtos">
+      <h1>🛍️ Produtos</h1>
+      <p class="subtit">Encontre tudo o que seu pet precisa</p>
+
+      <div class="filtros" role="group" aria-label="Filtrar por categoria">
+        <button type="button" class="filtro-btn ativo" onclick="filtrarProdutos('Todos', this)">Todos</button>
+        <button type="button" class="filtro-btn" onclick="filtrarProdutos('Alimentação', this)">🥣 Alimentação</button>
+        <button type="button" class="filtro-btn" onclick="filtrarProdutos('Higiene', this)">🧴 Higiene</button>
+        <button type="button" class="filtro-btn" onclick="filtrarProdutos('Brinquedos', this)">🎾 Brinquedos</button>
+        <button type="button" class="filtro-btn" onclick="filtrarProdutos('Acessórios', this)">🏷️ Acessórios</button>
+        <button type="button" class="filtro-btn" onclick="filtrarProdutos('Saúde', this)">💊 Saúde</button>
+      </div>
+
+      <div class="produtos-grid" id="produtosGrid" aria-label="Grade de produtos">
+        <!-- Renderizado por JS (loja.js → renderProdutos) -->
+      </div>
+    </section>
+
+    <!-- ============================
+         PÁGINA: SERVIÇOS
+    ============================= -->
+    <section class="page" id="page-servicos" aria-label="Serviços e agendamento">
+      <h1>✂️ Nossos Serviços</h1>
+      <p class="subtit">Selecione um serviço abaixo para agendar</p>
+
+      <div class="servicos-grid" role="list">
+
+        <article class="serv-card" role="listitem" onclick="selecionarServico('banho-tosa', this)" tabindex="0">
+          <span class="serv-icon">🛁</span>
+          <h3>Banho e amp; Tosa</h3>
+          <p>Serviço completo de higiene com produtos profissionais e cuidado especial para seu pet.</p>
+          <ul>
+            <li>Banho com shampoo premium</li>
+            <li>Tosa higiênica ou completa</li>
+            <li>Escovação e perfume</li>
+            <li>Limpeza de ouvidos</li>
+          </ul>
+          <div class="serv-rodape">
+            <strong>A partir de R$nbsp;55,00</strong>
+            <span>⏱ ~2 horas</span>
+          </div>
+        </article>
+
+        <article class="serv-card" role="listitem" onclick="selecionarServico('veterinario', this)" tabindex="0">
+          <span class="serv-icon">🩺</span>
+          <h3>Consulta Veterinária</h3>
+          <p>Avaliação completa de saúde com nossos médicos veterinários especializados.</p>
+          <ul>
+            <li>Exame clínico geral</li>
+            <li>Orientação nutricional</li>
+            <li>Vacinação e vermifugação</li>
+            <li>Emissão de atestado</li>
+          </ul>
+          <div class="serv-rodape">
+            <strong>A partir de R$nbsp;120,00</strong>
+            <span>⏱ ~1 hora</span>
+          </div>
+        </article>
+
+        <article class="serv-card" role="listitem" onclick="selecionarServico('hotel', this)" tabindex="0">
+          <span class="serv-icon">🏨</span>
+          <h3>Hotel Pet</h3>
+          <p>Hospedagem segura e confortável quando você precisa se ausentar.</p>
+          <ul>
+            <li>Acomodações individuais</li>
+            <li>Alimentação inclusa</li>
+            <li>Passeios diários</li>
+            <li>Câmeras 24h</li>
+          </ul>
+          <div class="serv-rodape">
+            <strong>A partir de R$nbsp;80,00/dia</strong>
+            <span>⏱ Diária</span>
+          </div>
+        </article>
+
+        <article class="serv-card" role="listitem" onclick="selecionarServico('adestramento', this)" tabindex="0">
+          <span class="serv-icon">🎓</span>
+          <h3>Adestramento</h3>
+          <p>Treinamento comportamental com técnicas positivas para cães de todas as raças e idades.</p>
+          <ul>
+            <li>Comandos básicos</li>
+            <li>Correção de comportamentos</li>
+            <li>Socialização</li>
+            <li>Certificado de conclusão</li>
+          </ul>
+          <div class="serv-rodape">
+            <strong>A partir de R$nbsp;200,00/mês</strong>
+            <span>⏱ 1h/sessão</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- BOX DE AGENDAMENTO -->
+      <div class="agend-box" id="agendBox" style="display:none" aria-live="polite">
+        <h2>📅 Agendar: <span id="agendServNome"></span></h2>
+
+        <!-- Steps -->
+        <div class="steps">
+          <span class="step ativo" id="stepHorario">1 Horário</span>
+          <div class="step-line"></div>
+          <span class="step" id="stepDados">2 Seus dados</span>
+        </div>
+
+        <!-- Etapa 1: Horário -->
+        <div id="etapaHorario">
+          <p style="font-size:.875rem;color:var(--txt-soft);margin-bottom:1rem">Escolha um horário disponível:</p>
+          <div class="hor-grid">
+            <button type="button" class="hor-btn" onclick="selecionarHorario('08:00', this)">08:00</button>
+            <button type="button" class="hor-btn" onclick="selecionarHorario('09:00', this)">09:00</button>
+            <button type="button" class="hor-btn" onclick="selecionarHorario('10:00', this)">10:00</button>
+            <button type="button" class="hor-btn" onclick="selecionarHorario('11:00', this)">11:00</button>
+            <button type="button" class="hor-btn" onclick="selecionarHorario('13:00', this)">13:00</button>
+            <button type="button" class="hor-btn" onclick="selecionarHorario('14:00', this)">14:00</button>
+            <button type="button" class="hor-btn" onclick="selecionarHorario('15:00', this)">15:00</button>
+            <button type="button" class="hor-btn" onclick="selecionarHorario('16:00', this)">16:00</button>
+          </div>
+        </div>
+
+        <!-- Etapa 2: Dados -->
+        <div id="etapaDados" style="display:none">
+          <form onsubmit="confirmarAgendamento(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="agNomePet">Nome do Pet *</label>
+                <input type="text" id="agNomePet" name="nomePet" placeholder="Ex: Bolinha" required>
+              </div>
+              <div class="form-group">
+                <label for="agTutor">Seu nome *</label>
+                <input type="text" id="agTutor" name="tutor" placeholder="Ex: João Silva" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="agTel">Telefone *</label>
+                <input type="tel" id="agTel" name="tel" placeholder="(11) 9 0000-0000" required>
+              </div>
+              <div class="form-group">
+                <label for="agData">Data desejada *</label>
+                <input type="date" id="agData" name="data" required>
+              </div>
+            </div>
+            <div style="display:flex;gap:.75rem;margin-top:.5rem">
+              <button type="submit" class="btn-pri">✓ Confirmar Agendamento</button>
+              <button type="button" class="btn-sec" onclick="novoAgendamento()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- CONFIRMAÇÃO -->
+      <div class="confirm-box" id="agendConfirm" style="display:none" aria-live="polite">
+        <span class="confirm-icon">🎉</span>
+        <h3>Agendamento confirmado!</h3>
+        <p id="agendConfirmTxt"></p>
+        <p style="color:var(--txt-soft);margin-bottom:1.5rem">Entraremos em contato para confirmar. Te esperamos!</p>
+        <button type="button" class="btn-pri" onclick="novoAgendamento()">+ Novo agendamento</button>
+      </div>
+    </section>
+
+    <!-- ============================
+         PÁGINA: CARRINHO
+    ============================= -->
+    <section class="page" id="page-carrinho" aria-label="Carrinho de compras">
+      <h1>🛒 Carrinho</h1>
+
+      <!-- Vazio -->
+      <div class="carr-vazio" id="carrinhoVazio" aria-live="polite">
+        <span>🛒</span>
+        <h2>Seu carrinho está vazio</h2>
+        <p>Adicione produtos e volte aqui para finalizar sua compra.</p>
+        <button type="button" class="btn-pri" onclick="navegarPara('produtos')">🛍️ Ver Produtos</button>
+      </div>
+
+      <!-- Conteúdo -->
+      <div class="carr-grid" id="carrinhoConteudo" style="display:none">
+        <div class="carr-lista" id="carrinhoItens" aria-label="Itens no carrinho">
+          <!-- Renderizado por JS -->
+        </div>
+        <aside aria-label="Resumo do pedido">
+          <div class="resumo-box">
+            <h3>Resumo do pedido</h3>
+            <div class="res-linha">
+              <span>Subtotal</span>
+              <span id="resumoSubtotal">R$ 0,00</span>
+            </div>
+            <div class="res-linha">
+              <span>Frete</span>
+              <span id="resumoFrete">R$ 15,90</span>
+            </div>
+            <div id="avisoFrete" class="aviso-frete aviso-muted"></div>
+            <div class="res-linha res-total">
+              <span><strong>Total</strong></span>
+              <span class="preco-dest" id="resumoTotal">R$ 0,00</span>
+            </div>
+            <button type="button" class="btn-pri btn-full" style="margin-top:1rem" onclick="abrirCheckout()">
+              Ir para o pagamento →
+            </button>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Checkout -->
+      <div class="checkout-box" id="checkoutBox" style="display:none">
+        <h2>💳 Finalizar Pedido</h2>
+        <form onsubmit="finalizarPedido(event)">
+          <p class="sec-titulo">Dados pessoais</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ckNome">Nome completo *</label>
+              <input type="text" id="ckNome" name="nome" required placeholder="Seu nome completo">
+            </div>
+            <div class="form-group">
+              <label for="ckEmail">E-mail *</label>
+              <input type="email" id="ckEmail" name="email" required placeholder="seu@email.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ckTel">Telefone *</label>
+              <input type="tel" id="ckTel" name="telefone" required placeholder="(11) 9 0000-0000">
+            </div>
+            <div class="form-group">
+              <label for="ckCep">CEP *</label>
+              <input type="text" id="ckCep" name="cep" required placeholder="00000-000" maxlength="9">
+            </div>
+          </div>
+
+          <p class="sec-titulo">Endereço de entrega</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ckRua">Rua / Avenida *</label>
+              <input type="text" id="ckRua" name="rua" required placeholder="Nome da rua">
+            </div>
+            <div class="form-group">
+              <label for="ckNum">Número *</label>
+              <input type="text" id="ckNum" name="numero" required placeholder="123">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ckCidade">Cidade *</label>
+            <input type="text" id="ckCidade" name="cidade" required placeholder="São Paulo">
+          </div>
+
+          <p class="sec-titulo">Forma de pagamento</p>
+          <div class="pag-opcoes" role="group" aria-label="Selecione a forma de pagamento">
+            <label class="pag-opt">
+              <input type="radio" name="pagamento" value="pix" checked> 💸 PIX
+            </label>
+            <label class="pag-opt">
+              <input type="radio" name="pagamento" value="cartao"> 💳 Cartão
+            </label>
+            <label class="pag-opt">
+              <input type="radio" name="pagamento" value="boleto"> 📄 Boleto
+            </label>
+          </div>
+
+          <div class="checkout-acoes">
+            <button type="submit" class="btn-pri">✓ Confirmar Pedido</button>
+            <button type="button" class="btn-sec" onclick="voltarCarrinho()">← Voltar</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Pedido concluído -->
+      <div class="confirm-box" id="pedidoConcluido" style="display:none" aria-live="assertive">
+        <span class="confirm-icon">🎉</span>
+        <h3>Pedido realizado com sucesso!</h3>
+        <p>Número do seu pedido: <span class="numero-pedido"></span></p>
+        <p style="color:var(--txt-soft);margin-bottom:1.5rem">Você receberá um e-mail de confirmação. Obrigado pela compra!</p>
+        <button type="button" class="btn-pri" onclick="continuarComprando()">Continuar comprando</button>
+      </div>
+    </section>
+
+    <!-- ============================
+         PÁGINA: CONTATO
+    ============================= -->
+    <section class="page" id="page-contato" aria-label="Contato">
+      <h1>📬 Contato</h1>
+      <p class="subtit">Fale conosco — respondemos em até 24 horas</p>
+
+      <div class="contato-grid">
+        <!-- Informações -->
+        <div class="info-cards">
+          <div class="info-card">
+            <h2>📍 Onde nos encontrar</h2>
+            <address>
+              <div class="info-item">
+                <span class="ii-icon">📌</span>
+                <div>
+                  <strong>Endereço</strong>
+                  <p>Rua das Flores, 1234<br>Bairro Jardim Verde<br>São Paulo – SP, CEP 01234-567</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="ii-icon">📞</span>
+                <div>
+                  <strong>Telefone / WhatsApp</strong>
+                  <p><a href="tel:+5511999999999">(11) 9 9999-9999</a></p>
+                </div>
+              </div>
+              <div class="info-item">
+                <span class="ii-icon">✉️</span>
+                <div>
+                  <strong>E-mail</strong>
+                  <p><a href="mailto:contato@amigofiel.com.br">contato@amigofiel.com.br</a></p>
+                </div>
+              </div>
+            </address>
+          </div>
+
+          <div class="info-card">
+            <h2>⏰ Horário de funcionamento</h2>
+            <div class="hor-lista">
+              <div class="hor-row"><strong>Segunda a Sexta</strong><span>08:00 – 18:00</span></div>
+              <div class="hor-row"><strong>Sábado</strong><span>08:00 – 14:00</span></div>
+              <div class="hor-row"><strong>Domingo</strong><span>Fechado</span></div>
+              <div class="hor-row"><strong>Feriados</strong><span>09:00 – 13:00</span></div>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <h2>📱 Siga-nos nas redes</h2>
+            <div class="redes">
+              <a class="rede-btn" href="#" aria-label="Instagram">
+                📸<br>Instagram
+              </a>
+              <a class="rede-btn" href="#" aria-label="Facebook">
+                👍<br>Facebook
+              </a>
+              <a class="rede-btn" href="#" aria-label="WhatsApp">
+                💬<br>WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulário -->
+        <div>
+          <div class="info-card">
+            <h2>💌 Enviar mensagem</h2>
+            <form id="formContato" onsubmit="enviarMensagem(event)" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="ctNome">Seu nome *</label>
+                  <input type="text" id="ctNome" name="nome" required placeholder="Ex: Ana Lima">
+                </div>
+                <div class="form-group">
+                  <label for="ctEmail">E-mail *</label>
+                  <input type="email" id="ctEmail" name="email" required placeholder="ana@email.com">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="ctAssunto">Assunto *</label>
+                <input type="text" id="ctAssunto" name="assunto" required placeholder="Ex: Dúvida sobre serviço de banho">
+              </div>
+              <div class="form-group">
+                <label for="ctMsg">Mensagem *</label>
+                <textarea id="ctMsg" name="mensagem" rows="5" required placeholder="Escreva sua mensagem aqui..."></textarea>
+              </div>
+              <button type="submit" class="btn-pri btn-full">📨 Enviar mensagem</button>
+            </form>
+
+            <div class="confirm-box" id="mensagemEnviada" style="display:none" aria-live="polite">
+              <span class="confirm-icon">✅</span>
+              <h3>Mensagem enviada!</h3>
+              <p>Obrigado pelo contato. Nossa equipe responderá em até 24 horas úteis.</p>
+              <button type="button" class="btn-sec" onclick="novaMensagem()">Enviar outra mensagem</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================
+         PÁGINA: BLOG
+    ============================= -->
+    <section class="page" id="page-blog" aria-label="Blog e dicas">
+      <h1>📰 Blog amp; Dicas</h1>
+      <p class="subtit">Conteúdo especializado para cuidar melhor do seu pet</p>
+
+      <div class="blog-grid" style="gap:1.25rem">
+        <article class="blog-card" style="flex-direction:column;padding:1.5rem">
+          <div style="display:flex;gap:1rem;align-items:flex-start">
+            <span class="blog-icon">🥣</span>
+            <div>
+              <time datetime="2025-05-10">10 de maio de 2025</time>
+              <h3 style="font-size:1rem;margin-bottom:.4rem">Como escolher a ração certa para o seu cão?</h3>
+              <p>Entenda os diferentes tipos de ração e como identificar a melhor opção para a raça e idade do seu pet. Veja os ingredientes que fazem a diferença para a saúde do seu animal.</p>
+            </div>
+          </div>
+        </article>
+        <article class="blog-card" style="flex-direction:column;padding:1.5rem">
+          <div style="display:flex;gap:1rem;align-items:flex-start">
+            <span class="blog-icon">🛁</span>
+            <div>
+              <time datetime="2025-05-03">3 de maio de 2025</time>
+              <h3 style="font-size:1rem;margin-bottom:.4rem">Frequência ideal de banho para cães e gatos</h3>
+              <p>Saiba por que banhos em excesso podem prejudicar a saúde da pelagem e da pele do seu animal. Descubra a frequência recomendada por veterinários.</p>
+            </div>
+          </div>
+        </article>
+        <article class="blog-card" style="flex-direction:column;padding:1.5rem">
+          <div style="display:flex;gap:1rem;align-items:flex-start">
+            <span class="blog-icon">🎾</span>
+            <div>
+              <time datetime="2025-04-25">25 de abril de 2025</time>
+              <h3 style="font-size:1rem;margin-bottom:.4rem">A importância dos brinquedos no desenvolvimento do pet</h3>
+              <p>Brinquedos não são apenas diversão — eles estimulam o cérebro, reduzem a ansiedade e fortalecem o vínculo entre o animal e o tutor.</p>
+            </div>
+          </div>
+        </article>
+        <article class="blog-card" style="flex-direction:column;padding:1.5rem">
+          <div style="display:flex;gap:1rem;align-items:flex-start">
+            <span class="blog-icon">💊</span>
+            <div>
+              <time datetime="2025-04-18">18 de abril de 2025</time>
+              <h3 style="font-size:1rem;margin-bottom:.4rem">Calendário de vacinas: o que não pode faltar</h3>
+              <p>Conheça as vacinas essenciais para cães e gatos em cada fase da vida, e por que manter o calendário vacinal em dia é fundamental para a saúde do seu pet.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" role="contentinfo">
+    <div class="ft-inner">
+      <div class="ft-col">
+        <p class="ft-logo">🐾 <strong>ROWF</strong></p>
+        <p>O melhor cuidado para o seu melhor amigo. Qualidade, amor e dedicação em cada produto e serviço.</p>
+      </div>
+      <nav class="ft-col" aria-label="Links rápidos">
+        <h3>Links rápidos</h3>
+        <ul>
+          <li><a href="#" onclick="navegarPara('home');return false">Início</a></li>
+          <li><a href="#" onclick="navegarPara('produtos');return false">Produtos</a></li>
+          <li><a href="#" onclick="navegarPara('servicos');return false">Serviços</a></li>
+          <li><a href="#" onclick="navegarPara('carrinho');return false">Carrinho</a></li>
+          <li><a href="#" onclick="navegarPara('contato');return false">Contato</a></li>
+        </ul>
+      </nav>
+      <div class="ft-col">
+        <h3>Serviços</h3>
+        <ul>
+          <li><a href="#" onclick="navegarPara('servicos');return false">Banho &amp; Tosa</a></li>
+          <li><a href="#" onclick="navegarPara('servicos');return false">Consulta Veterinária</a></li>
+          <li><a href="#" onclick="navegarPara('servicos');return false">Hotel Pet</a></li>
+          <li><a href="#" onclick="navegarPara('servicos');return false">Adestramento</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p>© 2025 ROWF. Todos os direitos reservados.</p>
+      <a class="ft-admin-link" href="admin.html">🔐 Área administrativa</a>
+    </div>
+  </footer>
+
+</div><!-- /wrapper -->
+
+<!-- SCRIPTS -->
+<script src="../js/banco.js"></script>
+<script src="../js/loja.js"></script>
+</body>
+</html>
